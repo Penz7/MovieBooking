@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:movie_booking/generated/assets.gen.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
+import 'package:movie_booking/screens/login/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({
@@ -16,10 +19,10 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-   late AnimationController _animationController;
-   late Animation<double> _animation;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
- @override
+  @override
   void initState() {
     _animationController = AnimationController(
       vsync: this,
@@ -33,9 +36,20 @@ class _SplashScreenState extends State<SplashScreen>
       reverseCurve: Curves.bounceIn,
     );
     _animationController.forward();
+
+    Timer(
+      const Duration(milliseconds: 2500),
+      () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const LoginScreen(),
+          ),
+        );
+      },
+    );
     super.initState();
   }
-
 
   @override
   void dispose() {
