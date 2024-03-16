@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="splash">#E81667</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="statusBar">#2E3147</color>
+    <color name="appBarColor">#222539</color>
+    <color name="greenColor">#2EC492</color>
+    <color name="orangeColor">#EB8D2F</color>
+    <color name="greyColor">#F4F4F4</color>
+    <color name="blueBorder">#3164CE</color>
+    <color name="redBorder">#FFF1F0</color>
+    <color name="redLight">#EB8D2F</color>
+    <color name="blueLight">#F5F9FF</color>
+    <color name="text">#262626</color>
+</resources>
