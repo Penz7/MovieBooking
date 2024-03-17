@@ -76,13 +76,14 @@ class MessageDialog extends StatelessWidget {
                   Container(
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Colors.grey,
+                      color: UIColors.splash,
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Center(
                       child: CusText.semiBold(
-                        "close",
+                        "Close",
                         fontSize: FontSizes.medium,
+                        color: UIColors.white,
                       ),
                     ),
                   ),
