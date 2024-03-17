@@ -30,12 +30,24 @@ class $AssetsIconsGen {
   /// File path: assets/icons/google.svg
   SvgGenImage get google => const SvgGenImage('assets/icons/google.svg');
 
+  /// File path: assets/icons/ic_clear.svg
+  SvgGenImage get icClear => const SvgGenImage('assets/icons/ic_clear.svg');
+
+  /// File path: assets/icons/ic_visibility_off.svg
+  SvgGenImage get icVisibilityOff =>
+      const SvgGenImage('assets/icons/ic_visibility_off.svg');
+
+  /// File path: assets/icons/ic_visibility_on.svg
+  SvgGenImage get icVisibilityOn =>
+      const SvgGenImage('assets/icons/ic_visibility_on.svg');
+
   /// File path: assets/icons/splash_icon.svg
   SvgGenImage get splashIcon =>
       const SvgGenImage('assets/icons/splash_icon.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [facebook, google, splashIcon];
+  List<SvgGenImage> get values =>
+      [facebook, google, icClear, icVisibilityOff, icVisibilityOn, splashIcon];
 }
 
 class $AssetsTranslationsGen {

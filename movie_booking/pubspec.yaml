@@ -44,8 +44,16 @@ dependencies:
   firebase_core: 2.27.1
   #firebase auth
   firebase_auth: 4.17.9
+  #google_sign_in
+  google_sign_in: 6.2.1
   #get
   get: 4.6.6
+  #loading styled
+  loading_indicator: 3.1.1
+  #action for number keyboard
+  keyboard_actions: 4.2.0
+  #dialog
+  flutter_animated_dialog: 2.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
