@@ -1,25 +1,30 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_booking/generated/assets.gen.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
+import 'package:movie_booking/network/controller/auth_controller.dart';
+import 'package:movie_booking/utils/common/cus_inkwel.dart';
 import 'package:movie_booking/utils/common/cus_text.dart';
 import 'package:movie_booking/utils/constants/font_sizes.dart';
+import 'package:movie_booking/utils/constants/input_validatior.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
   State<StatefulWidget> createState() {
-    return _LoginScreenState();
+    return _SignUpScreenState();
   }
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final forgotEmailController = TextEditingController();
+  final cnfPassController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,86 +42,55 @@ class _LoginScreenState extends State<LoginScreen> {
           height: size.height,
           width: size.width,
           child: ListView(
-            padding: const EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
               horizontal: 20,
               vertical: 40,
             ),
             scrollDirection: Axis.vertical,
             children: [
-              Assets.icons.splashIcon.svg(
+               const SizedBox(
+                height: 20,
+              ),
+             Assets.icons.splashIcon.svg(
                 height: 50,
                 alignment: Alignment.topCenter,
               ),
               const SizedBox(
-                height: 40,
+                height: 20,
               ),
-              CusText.semiBold(
-                'Welcome you!',
-                color: UIColors.white,
-                fontSize: FontSizes.moreExtra,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              CusText.medium(
-                'Login to book your seat, I said its your seat',
-                color: UIColors.white,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 40,
-              ),
+             
               Container(
-                padding: const EdgeInsets.all(
-                  16,
-                ),
-                height: size.height / 1.8,
+                padding: const EdgeInsets.all(19),
                 decoration: BoxDecoration(
                   color: UIColors.white,
-                  borderRadius: BorderRadius.circular(
-                    20,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 10,
-                      color: UIColors.black.withOpacity(
-                        0.04,
-                      ),
-                      offset: const Offset(
-                        0,
-                        2,
-                      ),
-                      spreadRadius: 5,
-                    ),
-                  ],
+                  borderRadius: BorderRadius.circular(10),
                 ),
+                width: size.width,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CusText.semiBold(
-                      'Login to your account',
-                      color: UIColors.splash,
+                      'Create your account',
                       fontSize: FontSizes.big,
+                      color: UIColors.splash,
                     ),
                     const SizedBox(
                       height: 16,
                     ),
                     TextFormField(
-                      controller: emailController,
                       style: const TextStyle(
-                        color: UIColors.text,
-                        fontSize: FontSizes.medium,
+                        color: UIColors.black,
                       ),
+                      controller: nameController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(5),
                           borderSide: BorderSide.none,
                         ),
-                        hintText: "Username",
+                        hintText: "Name",
                         hintStyle: const TextStyle(
                           color: Colors.black45,
-                          fontSize: FontSizes.medium,
                         ),
                         fillColor: UIColors.greyColor,
                         filled: true,
@@ -126,52 +100,87 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 16,
                     ),
                     TextFormField(
-                      controller: passwordController,
                       style: const TextStyle(
-                        color: UIColors.text,
-                        fontSize: FontSizes.medium,
+                        color: UIColors.black,
                       ),
+                      controller: emailController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: BorderSide.none,
+                        ),
+                        hintText: "Email Address",
+                        hintStyle: const TextStyle(
+                          color: Colors.black45,
+                        ),
+                        fillColor: UIColors.greyColor,
+                        filled: true,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TextFormField(
+                      style: const TextStyle(
+                        color: UIColors.black,
+                      ),
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
                           borderSide: BorderSide.none,
                         ),
                         hintText: "Password",
                         hintStyle: const TextStyle(
                           color: Colors.black45,
-                          fontSize: FontSizes.medium,
                         ),
                         fillColor: UIColors.greyColor,
                         filled: true,
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: CusText.base(
-                          "Forgot Password?",
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TextFormField(
+                      style: const TextStyle(color: UIColors.black),
+                      controller: cnfPassController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: BorderSide.none,
                         ),
+                        hintText: "Confirm Password",
+                        hintStyle: const TextStyle(color: Colors.black45),
+                        fillColor: UIColors.greyColor,
+                        filled: true,
                       ),
                     ),
                     const SizedBox(
-                      height: 24,
+                      height: 16,
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        // AuthController.instance.login(emailController.text.trim(), passwordController.text.trim());
+                        if (InputValidator.validateField("Name", nameController.text.trim()) &&
+                            InputValidator.validateField("Email", emailController.text.trim())) {
+                          if (InputValidator.validatePassword(passwordController.text, cnfPassController.text)) {
+                            AuthController.instance.registerUser(emailController.text.trim(), passwordController.text.trim());
+                          }
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: UIColors.splash,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
                       child: Center(
                         child: Padding(
                           padding: const EdgeInsets.all(12),
                           child: CusText.semiBold(
-                            "LOGIN",
+                            'SIGNUP',
+                            fontSize: FontSizes.big,
                             color: UIColors.white,
                           ),
                         ),
@@ -185,9 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Expanded(
                           child: Divider(
                             thickness: 0.5,
-                            color: UIColors.black.withOpacity(
-                              0.3,
-                            ),
+                            color: UIColors.black.withOpacity(0.3),
                           ),
                         ),
                         Padding(
@@ -202,15 +209,54 @@ class _LoginScreenState extends State<LoginScreen> {
                         Expanded(
                           child: Divider(
                             thickness: 0.5,
-                            color: UIColors.black.withOpacity(
-                              0.3,
-                            ),
+                            color: UIColors.black.withOpacity(0.3),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 16,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        CusInkWel.padding(
+                          onTap: () {},
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 20,
+                            horizontal: 16,
+                          ),
+                          child: Row(
+                            children: [
+                              Assets.icons.google.svg(),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              CusText.base(
+                                'Google',
+                                fontSize: FontSizes.medium,
+                              ),
+                            ],
+                          ),
+                        ),
+                        CusInkWel.padding(
+                          onTap: () {},
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 20,
+                            horizontal: 16,
+                          ),
+                          child: Row(
+                            children: [
+                              Assets.icons.facebook.svg(),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              CusText.base(
+                                'Facebook',
+                                fontSize: FontSizes.medium,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                   ],
                 ),
@@ -221,14 +267,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: "Don’t have an account ? ",
+                      text: "Already have an account ? ",
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontFamily: GoogleFonts.quicksand().fontFamily,
                       ),
                     ),
                     TextSpan(
-                      text: "Sign up",
+                      text: "Login",
                       style: TextStyle(
                         decoration: TextDecoration.underline,
                         fontWeight: FontWeight.w700,
@@ -236,8 +282,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          // //Navigator.push(context, MaterialPageRoute(builder: (_) => SignUpScreen()));
-                          // Get.to(const SignUpScreen());
+                          Get.back();
                         },
                     ),
                     TextSpan(
@@ -249,7 +294,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-              ),
+              )
             ],
           ),
         ),

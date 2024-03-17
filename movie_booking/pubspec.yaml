@@ -40,7 +40,12 @@ dependencies:
   easy_localization_loader: 2.0.0
   #font:
   google_fonts: 6.1.0
-
+  #firebase core
+  firebase_core: 2.27.1
+  #firebase auth
+  firebase_auth: 4.17.9
+  #get
+  get: 4.6.6
 dev_dependencies:
   flutter_test:
     sdk: flutter

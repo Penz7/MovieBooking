@@ -1,13 +1,20 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_booking/firebase_options.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
+import 'package:movie_booking/network/controller/auth_controller.dart';
 import 'package:movie_booking/screens/splash_screen/splash_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await initConfig();
+  await Firebase.initializeApp(
+     options: DefaultFirebaseOptions.currentPlatform,
+  );
+  Get.put(AuthController());
   const fallbackLocale = Locale('vi', 'VN');
   // if (language == "vi") {
   //   fallbackLocale = const Locale("vi", "VN");
@@ -43,7 +50,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
                 debugShowCheckedModeBanner: false,
                 builder: (context, child) {
                   return MediaQuery(

@@ -24,12 +24,18 @@ class $AssetsColorGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/facebook.svg
+  SvgGenImage get facebook => const SvgGenImage('assets/icons/facebook.svg');
+
+  /// File path: assets/icons/google.svg
+  SvgGenImage get google => const SvgGenImage('assets/icons/google.svg');
+
   /// File path: assets/icons/splash_icon.svg
   SvgGenImage get splashIcon =>
       const SvgGenImage('assets/icons/splash_icon.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [splashIcon];
+  List<SvgGenImage> get values => [facebook, google, splashIcon];
 }
 
 class $AssetsTranslationsGen {

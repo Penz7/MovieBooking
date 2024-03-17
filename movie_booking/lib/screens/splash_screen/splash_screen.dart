@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:movie_booking/generated/assets.gen.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
-import 'package:movie_booking/screens/login/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({
@@ -36,18 +33,6 @@ class _SplashScreenState extends State<SplashScreen>
       reverseCurve: Curves.bounceIn,
     );
     _animationController.forward();
-
-    Timer(
-      const Duration(milliseconds: 2500),
-      () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => const LoginScreen(),
-          ),
-        );
-      },
-    );
     super.initState();
   }
 
@@ -61,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-    ));
+    ),);
     return Scaffold(
       backgroundColor: UIColors.splash,
       body: Center(
@@ -70,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen>
         child: Assets.icons.splashIcon.svg(
           height: 60,
         ),
-      )),
+      ),),
     );
   }
 }
