@@ -3,28 +3,31 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_booking/firebase_options.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
 import 'package:movie_booking/network/controller/auth_controller.dart';
-import 'package:movie_booking/screens/splash_screen/splash_screen.dart';
+import 'package:movie_booking/router/app_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
      options: DefaultFirebaseOptions.currentPlatform,
   );
-  Get.put(AuthController());
+  // Get.put(AuthController());
   const fallbackLocale = Locale('vi', 'VN');
   // if (language == "vi") {
   //   fallbackLocale = const Locale("vi", "VN");
   // }
-
+  GoRouter.optionURLReflectsImperativeAPIs = true;
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: UIColors.white,
     ),
   );
+
+  Get.put(AuthController());
   runApp(
     EasyLocalization(
       supportedLocales: const [
@@ -50,7 +53,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp.router(
                 debugShowCheckedModeBanner: false,
                 builder: (context, child) {
                   return MediaQuery(
@@ -74,7 +77,11 @@ class MyApp extends StatelessWidget {
                 ),
                 localizationsDelegates: context.localizationDelegates,
                 supportedLocales: context.supportedLocales,
-                home: const SplashScreen(),
+                routeInformationProvider:
+                    AppRouter.shareInstance.router.routeInformationProvider,
+                routerDelegate: AppRouter.shareInstance.router.routerDelegate,
+                routeInformationParser:
+                    AppRouter.shareInstance.router.routeInformationParser,       
               );
   }
 }

@@ -40,6 +40,9 @@ dependencies:
   easy_localization_loader: 2.0.0
   #font:
   google_fonts: 6.1.0
+  #slide
+  carousel_slider: 4.2.1
+  smooth_page_indicator: 1.1.0
   #firebase core
   firebase_core: 2.27.1
   #firebase auth
@@ -48,12 +51,16 @@ dependencies:
   google_sign_in: 6.2.1
   #get
   get: 4.6.6
+  #route
+  go_router: 12.1.3
   #loading styled
   loading_indicator: 3.1.1
   #action for number keyboard
   keyboard_actions: 4.2.0
   #dialog
   flutter_animated_dialog: 2.0.1
+   #network image
+  cached_network_image: 3.3.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -82,7 +89,7 @@ flutter:
     # - assets/icons/about_us/
     # - assets/icons/account/
     # - assets/icons/product/
-    # - assets/icons/navigation/
+    - assets/icons/navigation/
     # - assets/icons/footer/
     - assets/translations/
     - assets/color/

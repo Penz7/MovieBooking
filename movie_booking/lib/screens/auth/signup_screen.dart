@@ -166,6 +166,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         _cnfPassController.text,
                                       )) {
                                         AuthController.instance.registerUser(
+                                          context,
                                           _emailController.text.trim(),
                                           _passwordController.text.trim(),
                                         );
@@ -223,7 +224,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             children: [
                               CusInkWel.padding(
                                 onTap: () {
-                                  AuthController.instance.googleLogin();
+                                  AuthController.instance.googleLogin(context);
                                 },
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 20,
@@ -292,7 +293,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Get.back();
+                               Navigator.pop(context);
                               },
                           ),
                           TextSpan(

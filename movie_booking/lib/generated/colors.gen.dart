@@ -25,6 +25,12 @@ class UIColors {
   /// Color: #F5F9FF
   static const Color blueLight = Color(0xFFF5F9FF);
 
+  /// Color: #D9D9D9
+  static const Color d9d9d9 = Color(0xFFD9D9D9);
+
+  /// Color: #fafafa
+  static const Color fafafa = Color(0xFFFAFAFA);
+
   /// Color: #2EC492
   static const Color greenColor = Color(0xFF2EC492);
 

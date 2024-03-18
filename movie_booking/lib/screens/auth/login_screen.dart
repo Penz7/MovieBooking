@@ -2,16 +2,17 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_booking/generated/assets.gen.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
 import 'package:movie_booking/network/controller/auth_controller.dart';
-import 'package:movie_booking/screens/auth/signup_screen.dart';
 import 'package:movie_booking/utils/common/cus_inkwel.dart';
 import 'package:movie_booking/utils/common/cus_loading.dart';
 import 'package:movie_booking/utils/common/cus_text.dart';
 import 'package:movie_booking/utils/common/cus_text_field.dart';
 import 'package:movie_booking/utils/constants/font_sizes.dart';
+import 'package:movie_booking/utils/constants/input_validatior.dart';
 import 'package:movie_booking/utils/dialog/dialog_provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -176,13 +177,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                           String email = _forgotEmailController
                                               .text
                                               .trim();
-                                          if (email.isEmpty) {
-                                            return;
+                                          if (InputValidator.validateField(
+                                            "ForgotPassword",
+                                            _forgotEmailController.text.trim(),
+                                          )) {
+                                            AuthController.instance
+                                                .forgotPassword(context, email);
+                                            _forgotEmailController.text = "";
+                                            Navigator.of(context).pop(true);
                                           }
-                                          AuthController.instance
-                                              .forgorPassword(email);
-                                          _forgotEmailController.text = "";
-                                          Navigator.of(context).pop(true);
                                         },
                                         child: CusText.base(
                                           "Send",
@@ -208,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: _authController.isLoading.value
                                 ? null
                                 : () {
-                                    _authController.login(
+                                    _authController.login(context,
                                       _emailController.text.trim(),
                                       _passwordController.text.trim(),
                                     );
@@ -270,7 +273,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               CusInkWel.padding(
                                 onTap: () {
-                                  AuthController.instance.googleLogin();
+                                  AuthController.instance.googleLogin(context);
                                 },
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 20,
@@ -291,8 +294,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               CusInkWel.padding(
                                 onTap: () {
-                                  DialogProvider.instance.showMessageDialog(context, message: 'This feature is maintaining! Please comback later!!');
-                        
+                                  DialogProvider.instance.showMessageDialog(
+                                    context,
+                                    message:
+                                        'This feature is maintaining! Please comback later!!',
+                                  );
                                 },
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 20,
@@ -339,7 +345,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Get.to(const SignUpScreen());
+                                context.go('/login/sign-up');
                               },
                           ),
                           TextSpan(

@@ -30,8 +30,28 @@ class $AssetsIconsGen {
   /// File path: assets/icons/google.svg
   SvgGenImage get google => const SvgGenImage('assets/icons/google.svg');
 
+  /// File path: assets/icons/ic_back.svg
+  SvgGenImage get icBack => const SvgGenImage('assets/icons/ic_back.svg');
+
   /// File path: assets/icons/ic_clear.svg
   SvgGenImage get icClear => const SvgGenImage('assets/icons/ic_clear.svg');
+
+  /// File path: assets/icons/ic_dropdown.svg
+  SvgGenImage get icDropdown =>
+      const SvgGenImage('assets/icons/ic_dropdown.svg');
+
+  /// File path: assets/icons/ic_heart.svg
+  SvgGenImage get icHeart => const SvgGenImage('assets/icons/ic_heart.svg');
+
+  /// File path: assets/icons/ic_next.svg
+  SvgGenImage get icNext => const SvgGenImage('assets/icons/ic_next.svg');
+
+  /// File path: assets/icons/ic_notification.svg
+  SvgGenImage get icNotification =>
+      const SvgGenImage('assets/icons/ic_notification.svg');
+
+  /// File path: assets/icons/ic_search.svg
+  SvgGenImage get icSearch => const SvgGenImage('assets/icons/ic_search.svg');
 
   /// File path: assets/icons/ic_visibility_off.svg
   SvgGenImage get icVisibilityOff =>
@@ -41,13 +61,41 @@ class $AssetsIconsGen {
   SvgGenImage get icVisibilityOn =>
       const SvgGenImage('assets/icons/ic_visibility_on.svg');
 
+  $AssetsIconsNavigationGen get navigation => const $AssetsIconsNavigationGen();
+
   /// File path: assets/icons/splash_icon.svg
   SvgGenImage get splashIcon =>
       const SvgGenImage('assets/icons/splash_icon.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values =>
-      [facebook, google, icClear, icVisibilityOff, icVisibilityOn, splashIcon];
+  List<SvgGenImage> get values => [
+        facebook,
+        google,
+        icBack,
+        icClear,
+        icDropdown,
+        icHeart,
+        icNext,
+        icNotification,
+        icSearch,
+        icVisibilityOff,
+        icVisibilityOn,
+        splashIcon
+      ];
+}
+
+class $AssetsImagesGen {
+  const $AssetsImagesGen();
+
+  /// File path: assets/images/banner.png
+  AssetGenImage get banner => const AssetGenImage('assets/images/banner.png');
+
+  /// File path: assets/images/ic_error_image.png
+  AssetGenImage get icErrorImage =>
+      const AssetGenImage('assets/images/ic_error_image.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [banner, icErrorImage];
 }
 
 class $AssetsTranslationsGen {
@@ -63,11 +111,75 @@ class $AssetsTranslationsGen {
   List<String> get values => [enUS, viVN];
 }
 
+class $AssetsIconsNavigationGen {
+  const $AssetsIconsNavigationGen();
+
+  /// File path: assets/icons/navigation/ic_account.svg
+  SvgGenImage get icAccount =>
+      const SvgGenImage('assets/icons/navigation/ic_account.svg');
+
+  /// File path: assets/icons/navigation/ic_account_active.svg
+  SvgGenImage get icAccountActive =>
+      const SvgGenImage('assets/icons/navigation/ic_account_active.svg');
+
+  /// File path: assets/icons/navigation/ic_explore.svg
+  SvgGenImage get icExplore =>
+      const SvgGenImage('assets/icons/navigation/ic_explore.svg');
+
+  /// File path: assets/icons/navigation/ic_explore_active.svg
+  SvgGenImage get icExploreActive =>
+      const SvgGenImage('assets/icons/navigation/ic_explore_active.svg');
+
+  /// File path: assets/icons/navigation/ic_home.svg
+  SvgGenImage get icHome =>
+      const SvgGenImage('assets/icons/navigation/ic_home.svg');
+
+  /// File path: assets/icons/navigation/ic_home_active.svg
+  SvgGenImage get icHomeActive =>
+      const SvgGenImage('assets/icons/navigation/ic_home_active.svg');
+
+  /// File path: assets/icons/navigation/ic_meal.svg
+  SvgGenImage get icMeal =>
+      const SvgGenImage('assets/icons/navigation/ic_meal.svg');
+
+  /// File path: assets/icons/navigation/ic_meal_active.svg
+  SvgGenImage get icMealActive =>
+      const SvgGenImage('assets/icons/navigation/ic_meal_active.svg');
+
+  /// File path: assets/icons/navigation/ic_practice.svg
+  SvgGenImage get icPractice =>
+      const SvgGenImage('assets/icons/navigation/ic_practice.svg');
+
+  /// File path: assets/icons/navigation/ic_practice_active.svg
+  SvgGenImage get icPracticeActive =>
+      const SvgGenImage('assets/icons/navigation/ic_practice_active.svg');
+
+  /// File path: assets/icons/navigation/nutrition_scan_curve.svg
+  SvgGenImage get nutritionScanCurve =>
+      const SvgGenImage('assets/icons/navigation/nutrition_scan_curve.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values => [
+        icAccount,
+        icAccountActive,
+        icExplore,
+        icExploreActive,
+        icHome,
+        icHomeActive,
+        icMeal,
+        icMealActive,
+        icPractice,
+        icPracticeActive,
+        nutritionScanCurve
+      ];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsColorGen color = $AssetsColorGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
+  static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsTranslationsGen translations = $AssetsTranslationsGen();
 }
 
