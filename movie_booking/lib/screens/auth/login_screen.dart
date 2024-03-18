@@ -134,6 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 16,
                           ),
                           CusTextField(
+                        
                             controller: _passwordController,
                             bgColor: UIColors.greyColor,
                             hintText: 'Password',
@@ -215,6 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       _emailController.text.trim(),
                                       _passwordController.text.trim(),
                                     );
+                                     FocusManager.instance.primaryFocus?.unfocus();
                                   },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: UIColors.splash,

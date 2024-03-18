@@ -170,6 +170,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           _emailController.text.trim(),
                                           _passwordController.text.trim(),
                                         );
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
                                       }
                                     }
                                   },
@@ -244,9 +246,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                               CusInkWel.padding(
-                                 onTap: () {
-                                  DialogProvider.instance.showMessageDialog(context, message: 'This feature is maintaining! Please comback later!!',);
-                      
+                                onTap: () {
+                                  DialogProvider.instance.showMessageDialog(
+                                    context,
+                                    message:
+                                        'This feature is maintaining! Please comback later!!',
+                                  );
                                 },
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 20,
@@ -293,7 +298,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                               Navigator.pop(context);
+                                Navigator.pop(context);
                               },
                           ),
                           TextSpan(

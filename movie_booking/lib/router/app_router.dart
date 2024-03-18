@@ -7,6 +7,7 @@ import 'package:movie_booking/screens/auth/login_screen.dart';
 import 'package:movie_booking/screens/auth/signup_screen.dart';
 import 'package:movie_booking/screens/home/home.dart';
 import 'package:movie_booking/screens/main_tabbar_screen.dart';
+import 'package:movie_booking/screens/profile/components/profile_detail.dart';
 import 'package:movie_booking/screens/profile/profile_account.dart';
 import 'package:movie_booking/screens/splash_screen/page_not_found.dart';
 import 'package:movie_booking/screens/splash_screen/splash_screen.dart';
@@ -108,9 +109,18 @@ class AppRouter {
                 pageBuilder: (BuildContext context, GoRouterState state) =>
                     const MaterialPage<void>(
                   restorationId: 'profile',
-                  child: ProfileAccountScreen(),
+                  child: ProfileScreen(),
                 ),
-                routes: <RouteBase>[],
+                routes: <RouteBase>[
+                  GoRoute(
+                    path: 'account-detail',
+                    parentNavigatorKey:
+                        RouterKeyManager.instance.rootNavigatorKey,
+                    builder: (context, state) {
+                      return const AccountDetailScreen();
+                    },
+                  ),
+                ],
               ),
             ],
           ),

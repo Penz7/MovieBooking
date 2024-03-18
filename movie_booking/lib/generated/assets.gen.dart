@@ -33,6 +33,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_back.svg
   SvgGenImage get icBack => const SvgGenImage('assets/icons/ic_back.svg');
 
+  /// File path: assets/icons/ic_camera.svg
+  SvgGenImage get icCamera => const SvgGenImage('assets/icons/ic_camera.svg');
+
   /// File path: assets/icons/ic_clear.svg
   SvgGenImage get icClear => const SvgGenImage('assets/icons/ic_clear.svg');
 
@@ -72,6 +75,7 @@ class $AssetsIconsGen {
         facebook,
         google,
         icBack,
+        icCamera,
         icClear,
         icDropdown,
         icHeart,

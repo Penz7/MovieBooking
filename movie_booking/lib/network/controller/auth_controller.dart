@@ -18,6 +18,7 @@ class AuthController extends GetxController {
   final FirebaseAuth auth = FirebaseAuth.instance;
   var isLoading = false.obs;
 
+
   @override
   void onReady() {
     super.onReady();
@@ -111,7 +112,8 @@ class AuthController extends GetxController {
     } on FirebaseAuthException catch (e) {
       getErrorSnackBar(context, "Google Login Failed", e);
     } on PlatformException catch (e) {
-      getErrorSnackBar(context, "Google Login Failed", e as FirebaseAuthException);
+      getErrorSnackBar(
+          context, "Google Login Failed", e as FirebaseAuthException);
     } finally {
       isLoading(false);
       update();
@@ -146,7 +148,35 @@ class AuthController extends GetxController {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  void signOut() async {
-    await auth.signOut();
+  void signOut(BuildContext context) async {
+    try {
+      isLoading(true);
+      update();
+      await auth.signOut();
+      getSuccessSnackBar(context, "Successfully logout!!!");
+    } catch (e) {
+      // Xử lý lỗi nếu cần
+    } finally {
+      isLoading(false);
+      update();
+    }
   }
+  RxString updateName = ''.obs;
+
+ void updateProfile(BuildContext context, {
+  required String newDisplayName,
+}) async {
+  try {
+    final user = auth.currentUser;
+    if (user != null) {
+      await user.updateDisplayName(newDisplayName);
+      updateName.value = newDisplayName;
+      update();
+      getSuccessSnackBar(context, "Successfully update!!!");
+    }
+  } on FirebaseAuthException catch (e) {
+     getErrorSnackBar(
+        context, "Google Login Failed", e );
+  }
+}
 }

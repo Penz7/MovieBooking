@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     CusInkWel.base(
                       onTap: () {
-                        Get.to(() => const ProfileAccountScreen());
+                        Get.to(() => const ProfileScreen());
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(30),

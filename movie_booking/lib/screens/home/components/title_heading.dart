@@ -35,6 +35,7 @@ class TitleHeading extends StatelessWidget {
             fontSize: FontSizes.big,
           ),
           CusInkWel.base(
+            onTap: onTap,
             child: Row(
               children: [
                 CusText.bold(
