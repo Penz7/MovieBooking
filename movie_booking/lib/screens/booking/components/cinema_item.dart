@@ -49,7 +49,7 @@ class CinemaItem extends StatelessWidget {
                     width: 4,
                   ),
                   CusText.medium(
-                    'Bạn đang cách rạp này ${cinema.distance} km',
+                    'Bạn đang cách rạp này ${cinema.distance ?? ""} km',
                     color: Colors.blueAccent,
                   ),
                 ],
@@ -121,6 +121,7 @@ class CinemaItem extends StatelessWidget {
                       'movie_id': movieId,
                       'cinema_id': cinema.id,
                       'cinema_room_id': data.idRoom,
+                      'seat_layout_id': data.seatLayoutId,
                     },
                   );
                 },

@@ -96,6 +96,7 @@ class AppRouter {
                                 movieId: params['movie_id'] ?? '',
                                 cinemaId: params['cinema_id'] ?? '',
                                 cinemaRoomId: params['cinema_room_id'] ?? '',
+                                seatLayoutId: params['seat_layout_id'] ?? '',
                               );
                             },
                           ),

@@ -40,17 +40,19 @@ class CinemaRoomController extends GetxController {
   //   }
   // }
 
-  void getCinemaRoomById(String idCinema) async {
-    isLoading.value = true;
-    try {
-      List<CinemaRoom> data =
-          await _databaseService.getCinemaRoomById(idCinema);
-      print(data);
-      allCinemaRoombyID.assignAll(data);
-    } catch (error) {
-      print('Error get cinema room by $idCinema');
-    } finally {
-      isLoading.value = false;
-    }
+ void getCinemaRoomById(String idCinema) async {
+  isLoading.value = true;
+  try {
+    List<CinemaRoom> data = await _databaseService.getCinemaRoomById(idCinema);
+    print(data);
+    List<CinemaRoom> filteredData = data.where((room) => room.seatLayoutId != '').toList();
+
+    allCinemaRoombyID.assignAll(filteredData);
+  } catch (error) {
+    print('Error get cinema room by $idCinema: $error');
+  } finally {
+    isLoading.value = false;
   }
+}
+
 }

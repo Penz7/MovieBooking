@@ -1,4 +1,4 @@
-/// cinema_room_id : ""
+/// seat_layout_id : ""
 /// cols : 11
 /// gap : 2
 /// gap_col_index : 5
@@ -9,7 +9,7 @@
 
 class SeatModel {
   SeatModel({
-    String? cinemaRoomId,
+    String? seatLayoutId,
     int? cols,
     num? gap,
     int? gapColIndex,
@@ -19,7 +19,7 @@ class SeatModel {
     List<SeatsType>? seatType,
     List<String>? seatSelected, // Thêm trường dữ liệu seatSelected
   }) {
-    _cinemaRoomId = cinemaRoomId;
+    _seatLayoutId = seatLayoutId;
     _cols = cols;
     _gap = gap;
     _gapColIndex = gapColIndex;
@@ -31,7 +31,7 @@ class SeatModel {
   }
 
   SeatModel.fromJson(dynamic json) {
-    _cinemaRoomId = json['cinema_room_id'];
+    _seatLayoutId = json['seat_layout_id'];
     _cols = json['cols'];
     _gap = json['gap'];
     _gapColIndex = json['gap_col_index'];
@@ -49,7 +49,7 @@ class SeatModel {
         : []; // Lấy dữ liệu cho seatSelected từ JSON
   }
 
-  String? _cinemaRoomId;
+  String? _seatLayoutId;
   int? _cols;
   num? _gap;
   int? _gapColIndex;
@@ -60,7 +60,7 @@ class SeatModel {
   List<String>? _seatSelected; // Trường dữ liệu seatSelected
 
   SeatModel copyWith({
-    String? cinemaRoomId,
+    String? seatLayoutId,
     int? cols,
     num? gap,
     int? gapColIndex,
@@ -71,7 +71,7 @@ class SeatModel {
     List<String>? seatSelected, // Thêm trường dữ liệu seatSelected vào copyWith
   }) =>
       SeatModel(
-        cinemaRoomId: cinemaRoomId ?? _cinemaRoomId,
+        seatLayoutId: seatLayoutId ?? _seatLayoutId,
         cols: cols ?? _cols,
         gap: gap ?? _gap,
         gapColIndex: gapColIndex ?? _gapColIndex,
@@ -83,7 +83,7 @@ class SeatModel {
             _seatSelected, // Thêm trường dữ liệu seatSelected vào copyWith
       );
 
-  String? get cinemaRoomId => _cinemaRoomId;
+  String? get seatLayoutId => _seatLayoutId;
   int? get cols => _cols;
   num? get gap => _gap;
   int? get gapColIndex => _gapColIndex;
@@ -96,7 +96,7 @@ class SeatModel {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['cinema_room_id'] = _cinemaRoomId;
+    map['seat_layout_id'] = _seatLayoutId;
     map['cols'] = _cols;
     map['gap'] = _gap;
     map['gap_col_index'] = _gapColIndex;

@@ -14,11 +14,12 @@ class SeatSelectionScreen extends StatefulWidget {
   final String movieId;
   final String cinemaRoomId;
   final String cinemaId;
+  final String seatLayoutId;
   const SeatSelectionScreen({
     super.key,
     required this.movieId,
     required this.cinemaRoomId,
-    required this.cinemaId,
+    required this.cinemaId, required this.seatLayoutId,
   });
 
   @override
@@ -34,7 +35,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
   void initState() {
     super.initState();
     _cinemaController.getCinemaByID(widget.cinemaId);
-    _seatSelectionController.getSeatLayoutRoom(widget.cinemaRoomId);
+    _seatSelectionController.getSeatLayoutRoom(widget.seatLayoutId);
     _seatSelectionController.clearInfo();
   }
 
@@ -76,7 +77,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
                 height: 10,
               ),
               SeatType(
-                onTap: _seatSelectionController.seatType.call,
+                model: _seatSelectionController.seatLayout.first,
               ),
             ],
           ),
