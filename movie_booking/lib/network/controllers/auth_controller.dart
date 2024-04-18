@@ -12,17 +12,16 @@ import 'package:movie_booking/router/app_router.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
-  late Rx<User?> _user;
+  late Rx<User?> _user = Rx<User?>(null);
   bool isLoging = false;
   User? get user => _user.value;
   final FirebaseAuth auth = FirebaseAuth.instance;
   var isLoading = false.obs;
 
-
   @override
   void onReady() {
     super.onReady();
-    _user = Rx<User?>(auth.currentUser);
+    _user = Rx<User?>(null);
     _user.bindStream(auth.authStateChanges());
     ever(_user, loginRedirect);
   }
@@ -50,7 +49,7 @@ class AuthController extends GetxController {
           context, "Successfully logged in as ${_user.value!.email}");
     } on FirebaseAuthException catch (e) {
       //define error
-      getErrorSnackBar(context, "Login Failed", e);
+      getErrorSnackBar(context, "Login Failed", e as String);
     } finally {
       isLoading(false);
       update();
@@ -67,7 +66,7 @@ class AuthController extends GetxController {
       );
       getSuccessSnackBar(context, "Successfully register in as $email");
     } on FirebaseAuthException catch (e) {
-      getErrorSnackBar(context, "Account Creating Failed", e);
+      getErrorSnackBar(context, "Account Creating Failed", e as String);
     } finally {
       isLoading(false);
       update();
@@ -81,7 +80,7 @@ class AuthController extends GetxController {
       );
       getSuccessSnackBar(context, "Reset mail sent successfully. Check mail!");
     } on FirebaseAuthException catch (e) {
-      getErrorSnackBar(context, "Error", e);
+      getErrorSnackBar(context, "Error", e as String);
     }
   }
 
@@ -110,32 +109,32 @@ class AuthController extends GetxController {
             context, "Successfully logged in as ${_user.value!.email}");
       }
     } on FirebaseAuthException catch (e) {
-      getErrorSnackBar(context, "Google Login Failed", e);
+      getErrorSnackBar(context, "Google Login Failed", e as String);
     } on PlatformException catch (e) {
       getErrorSnackBar(
-          context, "Google Login Failed", e as FirebaseAuthException);
+          context, "Google Login Failed", e as String);
     } finally {
       isLoading(false);
       update();
     }
   }
 
-  void getErrorSnackBar(
-      BuildContext context, String message, FirebaseAuthException e) {
-    final snackBar = SnackBar(
-      content: Text("$message\n${e.message}"),
-      backgroundColor: const Color.fromARGB(
-        255,
-        235,
-        47,
-        47,
-      ),
-      duration: const Duration(
-        seconds: 1,
-      ),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+  void getErrorSnackBar(BuildContext context, String message, String errorMessage) {
+  final snackBar = SnackBar(
+    content: Text("$message\n$errorMessage"),
+    backgroundColor: const Color.fromARGB(
+      255,
+      235,
+      47,
+      47,
+    ),
+    duration: const Duration(
+      seconds: 1,
+    ),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
 
   void getSuccessSnackBar(BuildContext context, String message) {
     final snackBar = SnackBar(
@@ -161,22 +160,23 @@ class AuthController extends GetxController {
       update();
     }
   }
-  RxString updateName = ''.obs;
 
- void updateProfile(BuildContext context, {
-  required String newDisplayName,
-}) async {
-  try {
-    final user = auth.currentUser;
-    if (user != null) {
-      await user.updateDisplayName(newDisplayName);
-      updateName.value = newDisplayName;
-      update();
-      getSuccessSnackBar(context, "Successfully update!!!");
+  RxString updateName = "".obs;
+
+  void updateProfile(
+    BuildContext context, {
+    required String newDisplayName,
+  }) async {
+    try {
+      final user = auth.currentUser;
+      if (user != null) {
+        await user.updateDisplayName(newDisplayName);
+        updateName.value = newDisplayName;
+        update();
+        getSuccessSnackBar(context, "Successfully update!!!");
+      }
+    } on FirebaseAuthException catch (e) {
+      getErrorSnackBar(context, "Google Login Failed", e as String);
     }
-  } on FirebaseAuthException catch (e) {
-     getErrorSnackBar(
-        context, "Google Login Failed", e );
   }
-}
 }

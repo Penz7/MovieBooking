@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_booking/generated/assets.gen.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
-import 'package:movie_booking/network/controller/auth_controller.dart';
+import 'package:movie_booking/network/controllers/auth_controller.dart';
 import 'package:movie_booking/utils/common/cus_inkwel.dart';
 import 'package:movie_booking/utils/common/cus_loading.dart';
 import 'package:movie_booking/utils/common/cus_text.dart';

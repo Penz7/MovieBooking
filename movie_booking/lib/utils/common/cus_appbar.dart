@@ -49,7 +49,7 @@ class CusAppbar extends PreferredSize {
               ),
               title: CusText.bold(
                 title ?? "",
-                fontSize: FontSizes.big,
+                fontSize: FontSizes.extra,
                 color: textColor,
               ),
               titleSpacing: 0,
@@ -129,7 +129,7 @@ class CusBackbtn extends StatelessWidget {
           }
         },
         padding: 0,
-        child: Assets.icons.icBack.svg(width: 32),
+        child: Assets.icons.icBack.svg(width: 32,color: UIColors.white,),
       ),
     );
   }

@@ -4,6 +4,7 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -23,6 +24,7 @@ if (flutterVersionName == null) {
 }
 
 android {
+    compileSdkVersion flutter.compileSdkVersion
     namespace "com.example.movie_booking"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
@@ -49,6 +51,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        minSdkVersion 20                  
     }
 
     buildTypes {
@@ -64,4 +67,5 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+}

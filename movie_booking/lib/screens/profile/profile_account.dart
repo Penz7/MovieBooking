@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_booking/generated/assets.gen.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
-import 'package:movie_booking/network/controller/auth_controller.dart';
+import 'package:movie_booking/network/controllers/auth_controller.dart';
 import 'package:movie_booking/screens/home/components/title_heading.dart';
 import 'package:movie_booking/utils/common/cus_image.dart';
 import 'package:movie_booking/utils/common/cus_loading.dart';

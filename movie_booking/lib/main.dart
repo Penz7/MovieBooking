@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,8 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_booking/firebase_options.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
-import 'package:movie_booking/network/controller/auth_controller.dart';
+import 'package:movie_booking/network/controllers/auth_controller.dart';
+import 'package:movie_booking/network/controllers/location_controller.dart';
 import 'package:movie_booking/router/app_router.dart';
 
 void main() async {
@@ -15,7 +17,9 @@ void main() async {
   await Firebase.initializeApp(
      options: DefaultFirebaseOptions.currentPlatform,
   );
-  // Get.put(AuthController());
+  FirebaseFirestore.instance.settings = const Settings(
+    persistenceEnabled: true,
+  );
   const fallbackLocale = Locale('vi', 'VN');
   // if (language == "vi") {
   //   fallbackLocale = const Locale("vi", "VN");
@@ -28,6 +32,7 @@ void main() async {
   );
 
   Get.put(AuthController());
+  Get.put(LocationController());
   runApp(
     EasyLocalization(
       supportedLocales: const [

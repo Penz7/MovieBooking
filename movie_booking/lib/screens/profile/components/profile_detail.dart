@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
-import 'package:movie_booking/network/controller/auth_controller.dart';
+import 'package:movie_booking/network/controllers/auth_controller.dart';
 import 'package:movie_booking/utils/common/appbutton.dart';
 import 'package:movie_booking/utils/common/cus_appbar.dart';
 import 'package:movie_booking/utils/common/cus_text.dart';
@@ -37,6 +37,14 @@ class AccountDetailScreenState extends State<AccountDetailScreen> {
     _phoneController.text = phone;
     _nameController.text = name;
     _emailController.text = email.toString();
+
+    void refresh(){
+        setState(() {
+      _nameController.text = _authController.updateName.value;
+    });
+    }
+  
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: CusAppbar.customTitle(
@@ -154,6 +162,7 @@ class AccountDetailScreenState extends State<AccountDetailScreen> {
                       context,
                       newDisplayName: fullName,
                     );
+                    refresh();
                   },
                 ),
               ),

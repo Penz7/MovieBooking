@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:movie_booking/generated/assets.gen.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
-import 'package:movie_booking/network/controller/auth_controller.dart';
+import 'package:movie_booking/network/controllers/auth_controller.dart';
+import 'package:movie_booking/network/controllers/location_controller.dart';
 import 'package:movie_booking/screens/home/components/banner_movie.dart';
 import 'package:movie_booking/screens/home/components/category.dart';
 import 'package:movie_booking/screens/home/components/movie_comming.dart';
@@ -92,10 +93,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                           child: Row(
                             children: [
-                              CusText.base(
-                                'Current City',
-                                fontSize: FontSizes.small,
-                                color: UIColors.white,
+                              Obx(
+                                () => CusText.base(
+                                  LocationController.instance.city.value,
+                                  fontSize: FontSizes.small,
+                                  color: UIColors.white,
+                                ),
                               ),
                               const SizedBox(
                                 width: 4,
@@ -179,20 +182,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {},
                   ),
                 ),
-                const SliverToBoxAdapter(
-                  child: MoviesComming(),
+                SliverToBoxAdapter(
+                  child: const MoviesComming(),
                 ),
-                 SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: TitleHeading(
                     title: 'Interesting Posts: ',
                     onTap: () {},
                   ),
                 ),
-                 const SliverToBoxAdapter(
+                const SliverToBoxAdapter(
                   child: SocialPost(),
                 ),
-                  const SliverToBoxAdapter(
-                  child:  SizedBox( height: 30,),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 30,
+                  ),
                 ),
               ],
             ),
