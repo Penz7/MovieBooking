@@ -27,29 +27,42 @@ class SeatService {
   }
 
   Future<bool> addSeatSelected(
-      String seatLayoutId, List<String> idSeats) async {
-    try {
-      final snapshot = await _seatTypeRef
-          .where('seat_layout_id', isEqualTo: seatLayoutId)
-          .get();
+  String seatLayoutId, List<String> idSeats) async {
+  try {
+    final snapshot = await _seatTypeRef
+        .where('seat_layout_id', isEqualTo: seatLayoutId)
+        .get();
 
-      if (snapshot.docs.isNotEmpty) {
-        final seatModel = snapshot.docs.first.data();
-        final updatedSeats = seatModel.seatSelected ?? []
-          ..addAll(idSeats);
+    if (snapshot.docs.isNotEmpty) {
+      final seatModel = snapshot.docs.first.data();
+      final existingSeats = List<String>.from(seatModel.seatSelected ?? []);
 
-        await _seatTypeRef
-            .doc(snapshot.docs.first.id)
-            .update({'seat_selected': updatedSeats});
-
-        return true;
-      } else {
-        print('Tài liệu không tồn tại.');
-        return false;
+      // Kiểm tra từng idSeat mới
+      for (final idSeat in idSeats) {
+        // Nếu idSeat chưa tồn tại trong danh sách ghế đã chọn thì thêm vào
+        if (!existingSeats.contains(idSeat)) {
+          existingSeats.add(idSeat);
+        }
       }
-    } catch (error) {
-      print('Thêm idSeat thất bại: $error');
+
+      // Thực hiện cập nhật trường seat_selected trong Firestore
+      await _seatTypeRef
+          .doc(snapshot.docs.first.id)
+          .update({'seat_selected': existingSeats});
+
+      if (idSeats.every((id) => existingSeats.contains(id))) {
+        print('Đã đặt vé cho các chỗ ngồi này trước đó.');
+      }
+
+      return true;
+    } else {
+      print('Tài liệu không tồn tại.');
       return false;
     }
+  } catch (error) {
+    print('Thêm idSeat thất bại: $error');
+    return false;
   }
+}
+
 }
