@@ -17,7 +17,8 @@ class SeatModel {
     List<int>? rowBeaks,
     int? rows,
     List<SeatsType>? seatType,
-    List<String>? seatSelected, // Thêm trường dữ liệu seatSelected
+    List<String>? seatSelected,
+    String? movieId, // Thêm trường dữ liệu movie_id kiểu String
   }) {
     _seatLayoutId = seatLayoutId;
     _cols = cols;
@@ -27,7 +28,8 @@ class SeatModel {
     _rowBeaks = rowBeaks;
     _rows = rows;
     _seatType = seatType;
-    _seatSelected = seatSelected; // Khởi tạo trường dữ liệu seatSelected
+    _seatSelected = seatSelected;
+    _movieId = movieId; // Gán giá trị cho trường dữ liệu movie_id
   }
 
   SeatModel.fromJson(dynamic json) {
@@ -44,9 +46,8 @@ class SeatModel {
         _seatType?.add(SeatsType.fromJson(v));
       });
     }
-    _seatSelected = json['seat_selected'] != null
-        ? json['seat_selected'].cast<String>()
-        : []; // Lấy dữ liệu cho seatSelected từ JSON
+    _seatSelected = json['seat_selected'] != null ? json['seat_selected'].cast<String>() : [];
+    _movieId = json['movie_id']; // Lấy giá trị cho trường dữ liệu movie_id
   }
 
   String? _seatLayoutId;
@@ -57,7 +58,8 @@ class SeatModel {
   List<int>? _rowBeaks;
   int? _rows;
   List<SeatsType>? _seatType;
-  List<String>? _seatSelected; // Trường dữ liệu seatSelected
+  List<String>? _seatSelected;
+  String? _movieId; // Trường dữ liệu movie_id kiểu String
 
   SeatModel copyWith({
     String? seatLayoutId,
@@ -68,7 +70,8 @@ class SeatModel {
     List<int>? rowBeaks,
     int? rows,
     List<SeatsType>? seatType,
-    List<String>? seatSelected, // Thêm trường dữ liệu seatSelected vào copyWith
+    List<String>? seatSelected,
+    String? movieId, // Thêm trường dữ liệu movie_id kiểu String
   }) =>
       SeatModel(
         seatLayoutId: seatLayoutId ?? _seatLayoutId,
@@ -79,8 +82,8 @@ class SeatModel {
         rowBeaks: rowBeaks ?? _rowBeaks,
         rows: rows ?? _rows,
         seatType: seatType ?? _seatType,
-        seatSelected: seatSelected ??
-            _seatSelected, // Thêm trường dữ liệu seatSelected vào copyWith
+        seatSelected: seatSelected ?? _seatSelected,
+        movieId: movieId ?? _movieId, // Gán giá trị cho trường dữ liệu movie_id
       );
 
   String? get seatLayoutId => _seatLayoutId;
@@ -91,8 +94,8 @@ class SeatModel {
   List<int>? get rowBeaks => _rowBeaks;
   int? get rows => _rows;
   List<SeatsType>? get seatType => _seatType;
-  List<String>? get seatSelected =>
-      _seatSelected; // Trường dữ liệu seatSelected
+  List<String>? get seatSelected => _seatSelected;
+  String? get movieId => _movieId; // Trường dữ liệu movie_id kiểu String
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -106,11 +109,12 @@ class SeatModel {
     if (_seatType != null) {
       map['seat_type'] = _seatType?.map((v) => v.toJson()).toList();
     }
-    map['seat_selected'] =
-        _seatSelected; // Thêm trường dữ liệu seatSelected vào JSON
+    map['seat_selected'] = _seatSelected;
+    map['movie_id'] = _movieId; // Trường dữ liệu movie_id kiểu String
     return map;
   }
 }
+
 
 /// price : 95
 /// status : true

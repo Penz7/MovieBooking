@@ -37,6 +37,7 @@ class _BookingScreenState extends State<BookingScreen> {
   @override
   void initState() {
     _cinemaController.getCinemaByID(_cinemaController.allCinema.first.id ?? "");
+    _cinemaRoomController.getCinemaRoomById(_cinemaController.selectedCinema.first.id ?? '', widget.movieId);
     super.initState();
   }
 
@@ -66,7 +67,8 @@ class _BookingScreenState extends State<BookingScreen> {
                 date: _locationController.selectedDate.value,
                 onCinemaSelected: (Cinema data) {
                   _cinemaController.getCinemaByID(data.id ?? "");
-                  _cinemaRoomController.getCinemaRoomById(data.id ?? "");
+                  _cinemaRoomController.getCinemaRoomById(
+                      data.id ?? "", widget.movieId);
                 }),
             Obx(() {
               List<Cinema> datas = _cinemaController.selectedCinema.toList();
@@ -139,8 +141,23 @@ class _BookingScreenState extends State<BookingScreen> {
                   List<CinemaRoom> allCinemaRoom =
                       _cinemaRoomController.allCinemaRoombyID.toList();
 
-                  if (cinema.isEmpty) {
-                    return const SizedBox();
+                  if (cinema.isEmpty || allCinemaRoom.isEmpty) {
+                    return Container(
+                      alignment: Alignment.center,
+                      child: FutureBuilder(
+                        future: Future.delayed(const Duration(
+                          milliseconds: 500,
+                        )),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          } else {
+                            return CusText.bold('Hiện không có suất chiếu');
+                          }
+                        },
+                      ),
+                    );
                   } else {
                     return Container(
                       color: UIColors.white,

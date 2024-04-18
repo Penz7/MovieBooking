@@ -34,7 +34,7 @@ class SeatService {
           .get();
 
       if (snapshot.docs.isNotEmpty) {
-        final seatModel = snapshot.docs.first.data()!;
+        final seatModel = snapshot.docs.first.data();
         final updatedSeats = seatModel.seatSelected ?? []
           ..addAll(idSeats);
 

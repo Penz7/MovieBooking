@@ -35,7 +35,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
   void initState() {
     super.initState();
     _cinemaController.getCinemaByID(widget.cinemaId);
-    _seatSelectionController.getSeatLayoutRoom(widget.seatLayoutId);
+    _seatSelectionController.getSeatLayoutRoom(widget.seatLayoutId, widget.movieId);
     _seatSelectionController.clearInfo();
   }
 
@@ -107,7 +107,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
 
               if (data.length == _seatSelectionController.noOfSeats.value) {
                 _seatSelectionController.createOrder(
-                    context, widget.cinemaRoomId, data);
+                    context, widget.seatLayoutId, data);
               } else {
                 AuthController.instance.getErrorSnackBar(
                     context, "Please choose enough ticket", '');

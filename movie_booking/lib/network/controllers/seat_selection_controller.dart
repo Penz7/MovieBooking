@@ -36,23 +36,25 @@ class SeatSelectionController extends GetxController {
     seatType = initialValue.obs;
   }
 
-  void getSeatLayoutRoom(String cinemaRoomID) async {
+  void getSeatLayoutRoom(String seatLayoutId, String movieId) async {
     isLoading.value = true;
     seatLayout.clear();
+    print(movieId);
     try {
-      List<SeatModel> data = await _seatService.getSeatbyID(cinemaRoomID);
-      seatLayout.assignAll(data);
+      List<SeatModel> data = await _seatService.getSeatbyID(seatLayoutId);
+
+      seatLayout.assignAll(data.where((seat) => seat.movieId == movieId));
     } catch (error) {
-      print('Error get seat layout room by $cinemaRoomID');
+      print('Error get seat layout room by $seatLayoutId');
     } finally {
       isLoading.value = false;
     }
   }
 
   void createOrder(
-      BuildContext context, String cinemaRoomId, List<String> idSeat) async {
+      BuildContext context, String seatLayoutId, List<String> idSeat) async {
     try {
-      bool isSuccess = await _seatService.addSeatSelected(cinemaRoomId, idSeat);
+      bool isSuccess = await _seatService.addSeatSelected(seatLayoutId, idSeat);
       if (isSuccess) {
         AuthController.instance.getSuccessSnackBar(context, "Success");
       } else {

@@ -99,9 +99,6 @@ class CinemaItem extends StatelessWidget {
             color: UIColors.d9d9d9,
           ),
         ),
-        CusText.bold(
-          '2D Phụ đề',
-        ),
         const SizedBox(
           height: 16,
         ),
@@ -115,6 +112,7 @@ class CinemaItem extends StatelessWidget {
               final data = cinemaRooms[index];
               return GestureDetector(
                 onTap: () {
+                  
                   context.push(
                     '/home/movie-detail/$movieId/booking/$movieId/seat',
                     extra: {
