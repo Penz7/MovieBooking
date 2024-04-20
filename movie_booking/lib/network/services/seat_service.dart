@@ -116,12 +116,11 @@ class SeatService {
       final snapshot = await _seatTypeRef
           .where('seat_layout_id', isEqualTo: seatLayoutId)
           .get();
-
-      print(seatType);
-      print(numberSeat);
       if (snapshot.docs.isNotEmpty) {
         final seatData = snapshot.docs.first.data();
         final seatSelected = seatData.seatSelected ?? [];
+         final cols = seatData.cols ?? 0;
+         final rowBreak = seatData.rowBeaks ?? [];
 
         int countNor = 0;
         int countVip = 0;
@@ -136,14 +135,13 @@ class SeatService {
             countVipPro++;
           }
         }
-
         switch (seatType) {
           case 0:
-            return numberSeat <= countNor;
+            return numberSeat <= ((cols-1) * rowBreak[0]) - countNor;
           case 1:
-            return numberSeat <= countVip;
+            return numberSeat <=((cols-1) * rowBreak[1]) - countVip;
           case 2:
-            return numberSeat <= countVipPro;
+            return numberSeat <=((cols-1) * rowBreak[2]) - countVipPro;
           default:
             return false;
         }
