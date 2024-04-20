@@ -153,6 +153,10 @@ class SeatsType {
   bool? get status => _status;
   String? get title => _title;
 
+  set status(bool? value) {
+    _status = value;
+  }
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['price'] = _price;

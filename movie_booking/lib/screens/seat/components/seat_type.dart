@@ -25,7 +25,9 @@ class SeatType extends StatelessWidget {
             ),
             child: GestureDetector(
               onTap: () {
-                SeatSelectionController.instance.seatType.value = index;
+                if (model.seatType![index].status == true) {
+                  SeatSelectionController.instance.seatType.value = index;
+                }
               },
               child: AnimatedContainer(
                 duration: const Duration(
@@ -35,9 +37,10 @@ class SeatType extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color:
-                      index == SeatSelectionController.instance.seatType.value
+                   model.seatType![index].status == true ? 
+                   (index == SeatSelectionController.instance.seatType.value
                           ? UIColors.greenColor
-                          : const Color(0xfffcfcfc),
+                          : const Color(0xfffcfcfc)) : UIColors.d9d9d9,
                   border: Border.all(
                     width: 0.5,
                     color:
@@ -60,7 +63,7 @@ class SeatType extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "\u20B9 ${model.seatType![index].price}",
+                      "${model.seatType![index].price}k",
                       style: TextStyle(
                         color: index ==
                                 SeatSelectionController.instance.seatType.value

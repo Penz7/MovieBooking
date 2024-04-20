@@ -31,25 +31,27 @@ class SeatSelectionController extends GetxController {
 
   @override
   void onReady() {
-    super.onReady();
     noOfSeats = initialValue.obs;
     seatType = initialValue.obs;
+    super.onReady();
   }
 
   void getSeatLayoutRoom(String seatLayoutId, String movieId) async {
-    isLoading.value = true;
-    seatLayout.clear();
-    print(movieId);
-    try {
-      List<SeatModel> data = await _seatService.getSeatbyID(seatLayoutId);
+  isLoading.value = true;
+  seatLayout.clear();
+  await _seatService.updateSeatStatus(seatLayoutId); 
+  print(movieId);
+  try {
+    List<SeatModel> data = await _seatService.getSeatbyID(seatLayoutId);
 
-      seatLayout.assignAll(data.where((seat) => seat.movieId == movieId));
-    } catch (error) {
-      print('Error get seat layout room by $seatLayoutId');
-    } finally {
-      isLoading.value = false;
-    }
+    seatLayout.assignAll(data.where((seat) => seat.movieId == movieId));
+  } catch (error) {
+    print('Error get seat layout room by $seatLayoutId');
+  } finally {
+    isLoading.value = false;
   }
+}
+
 
   void createOrder(
       BuildContext context, String seatLayoutId, List<String> idSeat) async {
@@ -80,10 +82,10 @@ class SeatSelectionController extends GetxController {
     return "bus.svg";
   }
 
-  updateNoOfSeats(int value) {
-    noOfSeats = value.obs;
-    update();
-  }
+  // updateNoOfSeats(int value) {
+  //   noOfSeats = value.obs;
+  //   update();
+  // }
 
   clearInfo() {
     noOfSeats = initialValue.obs;

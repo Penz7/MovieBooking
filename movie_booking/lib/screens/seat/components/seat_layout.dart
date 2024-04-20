@@ -24,6 +24,7 @@ class SeatLayout extends StatelessWidget {
     required double price,
     required String rowNo,
     required List<String> seatSelected,
+    required int isSelectd,
   }) {
     String seatNo = "$seatCounter";
     String seatId = "$rowNo$seatNo";
@@ -34,27 +35,30 @@ class SeatLayout extends StatelessWidget {
       padding: const EdgeInsets.all(5.0),
       child: GestureDetector(
         onTap: () {
-          if (!isSelected) {
-            RxList seats = SeatSelectionController.instance.selectedSeats;
-            RxList seatPriceList = SeatSelectionController.instance.seatPrices;
+          if (isSelectd == SeatSelectionController.instance.seatType.value) {
+            if (!isSelected) {
+              RxList seats = SeatSelectionController.instance.selectedSeats;
+              RxList seatPriceList =
+                  SeatSelectionController.instance.seatPrices;
 
-            if (seats.contains(seatId)) {
-              seatPriceList.remove(price);
-              seats.remove(seatId);
-            } else {
-              if (seats.length >=
-                  SeatSelectionController.instance.noOfSeats.value) {
-                seats.removeAt(0);
-                seatPriceList.removeAt(0);
-                seats.add(seatId);
-                seatPriceList.add(price);
+              if (seats.contains(seatId)) {
+                seatPriceList.remove(price);
+                seats.remove(seatId);
               } else {
-                seatPriceList.add(price);
-                seats.add(seatId);
+                if (seats.length >=
+                    SeatSelectionController.instance.noOfSeats.value) {
+                  seats.removeAt(0);
+                  seatPriceList.removeAt(0);
+                  seats.add(seatId);
+                  seatPriceList.add(price);
+                } else {
+                  seatPriceList.add(price);
+                  seats.add(seatId);
+                }
               }
+              amount = seatPriceList.fold(0, (prev, e) => prev + e);
+              seatPrice(amount < 0 ? 0.0 : amount);
             }
-            amount = seatPriceList.fold(0, (prev, e) => prev + e);
-            seatPrice(amount < 0 ? 0.0 : amount);
           }
         },
         child: Obx(
@@ -98,7 +102,7 @@ class SeatLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int seatLength = SeatSelectionController.instance.seatType.value + 1;
+    int seatLength = 3;
     return Expanded(
       child: Column(
         children: [
@@ -155,12 +159,16 @@ class SeatLayout extends StatelessWidget {
               child: ListView.builder(
                 itemCount: seatLength,
                 itemBuilder: (_, index) {
+                  var reversedSeatType = model.seatType!.reversed.toList();
                   return Padding(
                     padding: const EdgeInsets.only(
                       bottom: 10.0,
                     ),
                     child: Container(
-                      color: Colors.white,
+                      color: (SeatSelectionController.instance.seatType.value ==
+                              index)
+                          ? Colors.white
+                          : UIColors.d9d9d9,
                       padding: const EdgeInsets.only(
                         top: 10,
                         bottom: 10,
@@ -171,7 +179,7 @@ class SeatLayout extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CusText.bold(
-                            " ${model.seatType?[seatLength - index - 1].price}.000 VNĐ - ${model.seatType?[seatLength - index - 1].title}",
+                            " ${reversedSeatType[seatLength - index - 1].price}.000 VNĐ - ${reversedSeatType[seatLength - index - 1].title}",
                           ),
                           const SizedBox(
                             height: 10,
@@ -201,10 +209,10 @@ class SeatLayout extends StatelessWidget {
                                     //numbering the seats
                                     seatCounter++;
                                     // String seatNo = "$seatCounter";
-                                    double price = model
-                                        .seatType![seatLength - index - 1]
-                                        .price!
-                                        .toDouble();
+                                    double price =
+                                        reversedSeatType[seatLength - index - 1]
+                                            .price!
+                                            .toDouble();
 
                                     return mainSeatLayout(
                                       seatPrice: SeatSelectionController
@@ -212,6 +220,7 @@ class SeatLayout extends StatelessWidget {
                                       price: price,
                                       rowNo: rowNo,
                                       seatSelected: model.seatSelected ?? [],
+                                      isSelectd: index,
                                     );
                                   },
                                 ),

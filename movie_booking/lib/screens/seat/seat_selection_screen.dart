@@ -19,7 +19,8 @@ class SeatSelectionScreen extends StatefulWidget {
     super.key,
     required this.movieId,
     required this.cinemaRoomId,
-    required this.cinemaId, required this.seatLayoutId,
+    required this.cinemaId,
+    required this.seatLayoutId,
   });
 
   @override
@@ -35,7 +36,8 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
   void initState() {
     super.initState();
     _cinemaController.getCinemaByID(widget.cinemaId);
-    _seatSelectionController.getSeatLayoutRoom(widget.seatLayoutId, widget.movieId);
+    _seatSelectionController.getSeatLayoutRoom(
+        widget.seatLayoutId, widget.movieId);
     _seatSelectionController.clearInfo();
   }
 
@@ -74,11 +76,17 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
                 onTap: _seatSelectionController.noOfSeats.call,
               ),
               const SizedBox(
-                height: 10,
+                height: 40,
               ),
-              SeatType(
-                model: _seatSelectionController.seatLayout.first,
-              ),
+              _seatSelectionController.seatLayout.isNotEmpty
+                  ? Obx(
+                      () => SeatType(
+                        model: _seatSelectionController.seatLayout.first,
+                      ),
+                    )
+                  : const Center(
+                    child: CircularProgressIndicator(),
+                  ),
             ],
           ),
         ),
@@ -92,12 +100,10 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
         height: AppBar().preferredSize.height,
         child: ElevatedButton(
           onPressed: () {
-            //print(_seatSelectionController.instance.isSeatSelection.value);
-
             if (_seatSelectionController.isSeatSelection.value) {
-              if (_seatSelectionController.seatPrice <= 0.0) {
+              if (_seatSelectionController.seatPrice.value <= 0.0) {
                 AuthController.instance.getErrorSnackBar(
-                    context, "Please select atleast one seat", '');
+                    context, "Hãy chọn chỗ ngồi trước khi thanh toán", '');
                 return;
               }
 
@@ -110,15 +116,20 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
                     context, widget.seatLayoutId, data);
               } else {
                 AuthController.instance.getErrorSnackBar(
-                    context, "Please choose enough ticket", '');
+                    context, "Hãy chọn đủ chỗ ngồi với số vé", '');
               }
             } else {
               if (_seatSelectionController.noOfSeats.value <= 0) {
-                AuthController.instance.getErrorSnackBar(
-                    context, "Please select number of seats", '');
+                AuthController.instance
+                    .getErrorSnackBar(context, "Hãy chọn số chỗ ngồi", '');
                 return;
+              } else if (_seatSelectionController.seatType.value < 0) {
+                AuthController.instance
+                    .getErrorSnackBar(context, "Hãy chọn loại vé", '');
+                return;
+              } else {
+                toggle(true);
               }
-              toggle(true);
             }
           },
           style: ElevatedButton.styleFrom(
@@ -159,7 +170,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
           },
           child: Obx(
             () => Text(
-              "${_seatSelectionController.noOfSeats < 0 ? 0 : _seatSelectionController.noOfSeats} Vé",
+              "${_seatSelectionController.noOfSeats.value < 0 ? 0 : _seatSelectionController.noOfSeats.value} Vé",
               style: const TextStyle(
                 color: Colors.white,
               ),
@@ -186,14 +197,16 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
           const SizedBox(
             height: 15,
           ),
-          Obx(
-            () => _seatSelectionController.isSeatSelection.value
-                ? SeatLayout(
-                    model: _seatSelectionController.seatLayout.first,
-                    cinemaRoomId: widget.cinemaRoomId,
-                  )
-                : noOfSeatSelection(),
-          ),
+          Obx(() {
+            if (_seatSelectionController.isSeatSelection.value) {
+              return SeatLayout(
+                model: _seatSelectionController.seatLayout.first,
+                cinemaRoomId: widget.cinemaRoomId,
+              );
+            } else {
+              return noOfSeatSelection();
+            }
+          }),
         ],
       ),
     );
