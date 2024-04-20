@@ -109,4 +109,48 @@ class SeatService {
       print('Lỗi khi cập nhật trạng thái ghế: $error');
     }
   }
+
+  Future<bool> checkEnoughSeat(
+      int numberSeat, String seatLayoutId, int seatType) async {
+    try {
+      final snapshot = await _seatTypeRef
+          .where('seat_layout_id', isEqualTo: seatLayoutId)
+          .get();
+
+      print(seatType);
+      print(numberSeat);
+      if (snapshot.docs.isNotEmpty) {
+        final seatData = snapshot.docs.first.data();
+        final seatSelected = seatData.seatSelected ?? [];
+
+        int countNor = 0;
+        int countVip = 0;
+        int countVipPro = 0;
+
+        for (String item in seatSelected) {
+          if (RegExp('[A-E]').hasMatch(item)) {
+            countNor++;
+          } else if (RegExp('[F-H]').hasMatch(item)) {
+            countVip++;
+          } else if (RegExp('[I-J]').hasMatch(item)) {
+            countVipPro++;
+          }
+        }
+
+        switch (seatType) {
+          case 0:
+            return numberSeat <= countNor;
+          case 1:
+            return numberSeat <= countVip;
+          case 2:
+            return numberSeat <= countVipPro;
+          default:
+            return false;
+        }
+      }
+    } catch (error) {
+      print('Lỗi khi kiểm tra số lượng ghế: $error');
+    }
+    return false;
+  }
 }

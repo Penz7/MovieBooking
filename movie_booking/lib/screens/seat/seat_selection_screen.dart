@@ -85,8 +85,8 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
                       ),
                     )
                   : const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                      child: CircularProgressIndicator(),
+                    ),
             ],
           ),
         ),
@@ -99,37 +99,65 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
       child: SizedBox(
         height: AppBar().preferredSize.height,
         child: ElevatedButton(
-          onPressed: () {
-            if (_seatSelectionController.isSeatSelection.value) {
-              if (_seatSelectionController.seatPrice.value <= 0.0) {
-                AuthController.instance.getErrorSnackBar(
-                    context, "Hãy chọn chỗ ngồi trước khi thanh toán", '');
-                return;
-              }
+          onPressed: () async {
+            final enoughSeat = await _seatSelectionController.checkEnoughSeat(
+              context,
+              _seatSelectionController.noOfSeats.value,
+              widget.seatLayoutId,
+              _seatSelectionController.seatType.value,
+            );
 
-              final data = _seatSelectionController.selectedSeats
-                  .toList()
-                  .cast<String>();
+            if (enoughSeat) {
+              if (_seatSelectionController.isSeatSelection.value) {
+                if (_seatSelectionController.seatPrice.value <= 0.0) {
+                  AuthController.instance.getErrorSnackBar(
+                    context,
+                    "Hãy chọn chỗ ngồi trước khi thanh toán",
+                    '',
+                  );
+                  return;
+                }
 
-              if (data.length == _seatSelectionController.noOfSeats.value) {
-                _seatSelectionController.createOrder(
-                    context, widget.seatLayoutId, data);
+                final data = _seatSelectionController.selectedSeats
+                    .toList()
+                    .cast<String>();
+
+                if (data.length == _seatSelectionController.noOfSeats.value) {
+                  _seatSelectionController.createOrder(
+                    context,
+                    widget.seatLayoutId,
+                    data,
+                  );
+                } else {
+                  AuthController.instance.getErrorSnackBar(
+                    context,
+                    "Hãy chọn đủ chỗ ngồi với số vé",
+                    '',
+                  );
+                }
               } else {
-                AuthController.instance.getErrorSnackBar(
-                    context, "Hãy chọn đủ chỗ ngồi với số vé", '');
+                if (_seatSelectionController.noOfSeats.value <= 0) {
+                  AuthController.instance.getErrorSnackBar(
+                    context,
+                    "Hãy chọn số chỗ ngồi",
+                    '',
+                  );
+                } else if (_seatSelectionController.seatType.value < 0) {
+                  AuthController.instance.getErrorSnackBar(
+                    context,
+                    "Hãy chọn loại vé",
+                    '',
+                  );
+                } else {
+                  toggle(true);
+                }
               }
             } else {
-              if (_seatSelectionController.noOfSeats.value <= 0) {
-                AuthController.instance
-                    .getErrorSnackBar(context, "Hãy chọn số chỗ ngồi", '');
-                return;
-              } else if (_seatSelectionController.seatType.value < 0) {
-                AuthController.instance
-                    .getErrorSnackBar(context, "Hãy chọn loại vé", '');
-                return;
-              } else {
-                toggle(true);
-              }
+              AuthController.instance.getErrorSnackBar(
+                context,
+                "Không đủ số lượng với loại vé này",
+                '',
+              );
             }
           },
           style: ElevatedButton.styleFrom(

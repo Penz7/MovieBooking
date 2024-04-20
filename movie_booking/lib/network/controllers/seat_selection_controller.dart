@@ -37,21 +37,20 @@ class SeatSelectionController extends GetxController {
   }
 
   void getSeatLayoutRoom(String seatLayoutId, String movieId) async {
-  isLoading.value = true;
-  seatLayout.clear();
-  await _seatService.updateSeatStatus(seatLayoutId); 
-  print(movieId);
-  try {
-    List<SeatModel> data = await _seatService.getSeatbyID(seatLayoutId);
+    isLoading.value = true;
+    seatLayout.clear();
+    await _seatService.updateSeatStatus(seatLayoutId);
+    print(movieId);
+    try {
+      List<SeatModel> data = await _seatService.getSeatbyID(seatLayoutId);
 
-    seatLayout.assignAll(data.where((seat) => seat.movieId == movieId));
-  } catch (error) {
-    print('Error get seat layout room by $seatLayoutId');
-  } finally {
-    isLoading.value = false;
+      seatLayout.assignAll(data.where((seat) => seat.movieId == movieId));
+    } catch (error) {
+      print('Error get seat layout room by $seatLayoutId');
+    } finally {
+      isLoading.value = false;
+    }
   }
-}
-
 
   void createOrder(
       BuildContext context, String seatLayoutId, List<String> idSeat) async {
@@ -69,6 +68,18 @@ class SeatSelectionController extends GetxController {
           .getErrorSnackBar(context, "Failed", error.toString());
     }
   }
+
+  Future<bool> checkEnoughSeat(BuildContext context, int numberSeat, String seatLayoutId, int seatType) async {
+  try {
+    bool isSuccess = await _seatService.checkEnoughSeat(numberSeat, seatLayoutId, seatType);
+    return isSuccess;
+  } catch (error) {
+    print('Đặt vé thất bại: $error');
+    AuthController.instance.getErrorSnackBar(context, "Failed", error.toString());
+    return false;
+  }
+}
+
 
   String getAsset() {
     int val = noOfSeats.value;
