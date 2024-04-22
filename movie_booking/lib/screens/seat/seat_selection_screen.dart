@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
 import 'package:movie_booking/network/controllers/auth_controller.dart';
 import 'package:movie_booking/network/controllers/cinema_controller.dart';
@@ -123,10 +124,20 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
                     .cast<String>();
 
                 if (data.length == _seatSelectionController.noOfSeats.value) {
-                  _seatSelectionController.createOrder(
-                    context,
-                    widget.seatLayoutId,
-                    data,
+                  // _seatSelectionController.createOrder(
+                  //   context,
+                  //   widget.seatLayoutId,
+                  //   data,
+                  // );
+                  context.push(
+                    '/home/movie-detail/${widget.movieId}/booking/${widget.movieId}/payment',
+                    extra: {
+                      'movie_id': widget.movieId,
+                      'cinema_id': widget.cinemaId,
+                      'cinema_room_id': widget.cinemaRoomId,
+                      'seat_layout_id': widget.seatLayoutId,
+                      'seat_id': data,
+                    },
                   );
                 } else {
                   AuthController.instance.getErrorSnackBar(

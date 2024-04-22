@@ -6,9 +6,11 @@ import 'package:movie_booking/router/router_key_manager.dart';
 import 'package:movie_booking/screens/auth/login_screen.dart';
 import 'package:movie_booking/screens/auth/signup_screen.dart';
 import 'package:movie_booking/screens/booking/booking_screen.dart';
+import 'package:movie_booking/screens/checkout/thank/thank_screen.dart';
 import 'package:movie_booking/screens/home/home_screen.dart';
 import 'package:movie_booking/screens/main_tabbar_screen.dart';
 import 'package:movie_booking/screens/movie_detail/movie_detail_screen.dart';
+import 'package:movie_booking/screens/checkout/payment/payment_screen.dart';
 import 'package:movie_booking/screens/profile/components/profile_detail.dart';
 import 'package:movie_booking/screens/profile/profile_account.dart';
 import 'package:movie_booking/screens/seat/seat_selection_screen.dart';
@@ -100,9 +102,34 @@ class AppRouter {
                               );
                             },
                           ),
+                          GoRoute(
+                            path: 'payment',
+                            parentNavigatorKey:
+                                RouterKeyManager.instance.rootNavigatorKey,
+                            builder: (context, state) {
+                              final params = state.extra as Map;
+                              return PaymentScreen(
+                                movieId: params['movie_id'] ?? '',
+                                cinemaId: params['cinema_id'] ?? '',
+                                cinemaRoomId: params['cinema_room_id'] ?? '',
+                                seatLayoutId: params['seat_layout_id'] ?? '', seatID: params['seat_id'] ?? '',
+                              );
+                            },
+                          ),
                         ],
                       ),
                     ],
+                  ),
+                     GoRoute(
+                    path: 'thank',
+                    parentNavigatorKey:
+                        RouterKeyManager.instance.rootNavigatorKey,
+                    builder: (context, state) {
+                      
+                      return ThankScreen(
+                       
+                      );
+                    },
                   ),
                 ],
               ),

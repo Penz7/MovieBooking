@@ -33,14 +33,16 @@ class ConfirmDialog extends StatelessWidget {
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (title != '') ...[
-                CusText.regular(
+                CusText.bold(
                   title,
+                  fontSize: FontSizes.big,
                   maxLines: 10,
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 16,
                 )
               ],
               CusText.regular(
@@ -49,14 +51,20 @@ class ConfirmDialog extends StatelessWidget {
                 maxLines: 10,
                 textAlign: TextAlign.center,
               ),
+              const SizedBox(
+                height: 16,
+              ),
               Divider(
                 thickness: 0.5,
                 color: UIColors.black.withOpacity(
                   0.3,
                 ),
               ),
+              const SizedBox(
+                height: 16,
+              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: CusInkWel.base(
@@ -70,6 +78,16 @@ class ConfirmDialog extends StatelessWidget {
                             color: UIColors.white,
                             width: 1,
                           ),
+                          boxShadow:  [
+                            BoxShadow(
+                              color: UIColors.black.withOpacity(0.1),
+                            blurRadius: 8,
+                              offset: const Offset(
+                                0,
+                                2,
+                              ),
+                            ),
+                          ],
                           borderRadius: BorderRadius.circular(4),
                         ),
                         padding: const EdgeInsets.symmetric(
@@ -83,7 +101,7 @@ class ConfirmDialog extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 16,
+                    width: 16,
                   ),
                   Expanded(
                     child: CusInkWel.base(
@@ -108,6 +126,7 @@ class ConfirmDialog extends StatelessWidget {
                         child: CusText.semiBold(
                           confirmButtonTitle,
                           textAlign: TextAlign.center,
+                          color: UIColors.white,
                         ),
                       ),
                     ),

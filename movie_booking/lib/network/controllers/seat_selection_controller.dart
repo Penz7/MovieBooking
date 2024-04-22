@@ -52,22 +52,17 @@ class SeatSelectionController extends GetxController {
     }
   }
 
-  void createOrder(
-      BuildContext context, String seatLayoutId, List<String> idSeat) async {
-    try {
-      bool isSuccess = await _seatService.addSeatSelected(seatLayoutId, idSeat);
-      if (isSuccess) {
-        AuthController.instance.getSuccessSnackBar(context, "Success");
-      } else {
-        AuthController.instance.getErrorSnackBar(
-            context, "Failed", "Failed to add seat selection.");
-      }
-    } catch (error) {
-      print('Đặt vé thất bại: $error');
-      AuthController.instance
-          .getErrorSnackBar(context, "Failed", error.toString());
-    }
+ Future<bool> createOrder(
+    String seatLayoutId, List<String> idSeat) async {
+  try {
+    await _seatService.addSeatSelected(seatLayoutId, idSeat);
+    return true;
+  } catch (error) {
+    print('Đặt vé thất bại: $error');
+    return false;
   }
+}
+
 
   Future<bool> checkEnoughSeat(BuildContext context, int numberSeat, String seatLayoutId, int seatType) async {
   try {
