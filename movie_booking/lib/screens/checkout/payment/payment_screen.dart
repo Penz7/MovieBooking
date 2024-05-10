@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -5,12 +6,15 @@ import 'package:go_router/go_router.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
 import 'package:movie_booking/network/controllers/auth_controller.dart';
 import 'package:movie_booking/network/controllers/movie_controller.dart';
+import 'package:movie_booking/network/controllers/order_history_controller.dart';
 import 'package:movie_booking/network/controllers/seat_selection_controller.dart';
+import 'package:movie_booking/network/models/order_history.dart';
 import 'package:movie_booking/screens/checkout/payment/components/movie_info.dart';
 import 'package:movie_booking/utils/common/cus_appbar.dart';
 import 'package:movie_booking/utils/common/cus_loading.dart';
 import 'package:movie_booking/utils/common/cus_text.dart';
 import 'package:movie_booking/utils/constants/font_sizes.dart';
+import 'package:movie_booking/utils/constants/random_chart.dart';
 import 'package:movie_booking/utils/dialog/dialog_provider.dart';
 import 'package:movie_booking/utils/dialog/view/confirm_dialog.dart';
 
@@ -37,10 +41,29 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   final MovieController _cinemaController = Get.find<MovieController>();
+  final OrderHistoryController _orderHistoryController =
+      Get.find<OrderHistoryController>();
   String? picUrl = AuthController.instance.user!.photoURL;
   String? name = AuthController.instance.user!.displayName;
   String? email = AuthController.instance.user!.email;
   String? phone = AuthController.instance.user!.phoneNumber;
+
+  late OrderHistories orderHistories;
+
+  @override
+  void initState() {
+    orderHistories = OrderHistories(
+      totalPrice: _seatSelectionController.seatPrice.value,
+      time: Timestamp.now(),
+      orderId: generateRandomString(),
+      movieId: widget.movieId,
+      cinemaId: widget.cinemaId,
+      cinemaRoomId: widget.cinemaRoomId,
+      seatId: widget.seatID,
+      userId: AuthController.instance.user?.uid ?? '',
+    );
+    super.initState();
+  }
 
   final SeatSelectionController _seatSelectionController =
       Get.find<SeatSelectionController>();
@@ -82,9 +105,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       cancelButtonTitle: 'Hủy',
                     ),
                   );
-                  if (result == true && context.mounted) {
+
+                  if (result == true && mounted) {
                     setState(() {
-                      _isPayLoading = true; // Hiển thị tiện ích loading
+                      _isPayLoading = true;
                     });
 
                     bool isSuccess = await _seatSelectionController.createOrder(
@@ -93,14 +117,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     );
 
                     setState(() {
-                      _isPayLoading = false; // Ẩn tiện ích loading
+                      _isPayLoading = false;
                     });
 
                     if (isSuccess) {
-                      if (mounted) {
+                      bool isCheck = await _orderHistoryController
+                          .addOrderHistory(orderHistories);
+
+                      if (isCheck && mounted) {
                         AuthController.instance
                             .getSuccessSnackBar(context, "Đặt vé thành công");
                         context.go('/home/thank');
+                      } else {
+                        if (mounted) {
+                          AuthController.instance.getErrorSnackBar(
+                              context, "Failed", "Đặt vé thất bại");
+                        }
                       }
                     } else {
                       if (mounted) {

@@ -8,3 +8,6 @@ const String CINEMAS = 'cinemas';
 const String CINEMA_ROOM = 'cinema_room';
 // ignore: constant_identifier_names
 const String SEAT_LAYOUT = 'seat_layout';
+
+// ignore: constant_identifier_names
+const String ORDER_HISTORY = 'order_history';

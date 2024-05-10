@@ -30,15 +30,16 @@ class CinemaController extends GetxController {
     }
   }
 
-  // Future<void> getCinemaByID(String id) async {
-  //   try {
-  //     selectedCinema.clear();
-  //     List<Cinema> data = await _cinemaService.getCinemaByID(id);
-  //     selectedCinema.assignAll(data);
-  //   } catch (error) {
-  //     print('Error fetching cinema by ID: $error');
-  //   }
-  // }
+ Future<Cinema?> cinemaByID(String id) async {
+  try {
+    List<Cinema> cinema = await _cinemaService.getCinemaByID(id);
+    return cinema.first;
+  } catch (error) {
+    print('Error fetching cinema by ID: $error');
+    return null; 
+  }
+}
+
 
   void getCinemaByID(String id)  {
     selectedCinema.clear();

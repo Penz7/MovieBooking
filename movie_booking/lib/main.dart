@@ -10,12 +10,13 @@ import 'package:movie_booking/firebase_options.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
 import 'package:movie_booking/network/controllers/auth_controller.dart';
 import 'package:movie_booking/network/controllers/location_controller.dart';
+import 'package:movie_booking/network/controllers/order_history_controller.dart';
 import 'package:movie_booking/router/app_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-     options: DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseFirestore.instance.settings = const Settings(
     persistenceEnabled: true,
@@ -33,6 +34,7 @@ void main() async {
 
   Get.put(AuthController());
   Get.put(LocationController());
+  Get.lazyPut(() => OrderHistoryController());
   runApp(
     EasyLocalization(
       supportedLocales: const [
@@ -51,7 +53,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({
-    super.key,   
+    super.key,
     required this.initLanguage,
   });
   final Locale initLanguage;
@@ -59,34 +61,34 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-                debugShowCheckedModeBanner: false,
-                builder: (context, child) {
-                  return MediaQuery(
-                    data: MediaQuery.of(context).copyWith(
-                      textScaler: TextScaler.noScaling,
-                    ),
-                    child: child!,
-                  );
-                },
-                theme: ThemeData(
-                  scaffoldBackgroundColor: UIColors.white,
-                  useMaterial3: true,
-                  appBarTheme: const AppBarTheme(
-                    surfaceTintColor: Colors.white,
-                  ),
-                  textTheme: GoogleFonts.quicksandTextTheme(),
-                  textSelectionTheme: const TextSelectionThemeData(
-                    cursorColor: UIColors.text,
-                  ),
-                  primaryColor: UIColors.splash,
-                ),
-                localizationsDelegates: context.localizationDelegates,
-                supportedLocales: context.supportedLocales,
-                routeInformationProvider:
-                    AppRouter.shareInstance.router.routeInformationProvider,
-                routerDelegate: AppRouter.shareInstance.router.routerDelegate,
-                routeInformationParser:
-                    AppRouter.shareInstance.router.routeInformationParser,       
-              );
+      debugShowCheckedModeBanner: false,
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            textScaler: TextScaler.noScaling,
+          ),
+          child: child!,
+        );
+      },
+      theme: ThemeData(
+        scaffoldBackgroundColor: UIColors.white,
+        useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          surfaceTintColor: Colors.white,
+        ),
+        textTheme: GoogleFonts.quicksandTextTheme(),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: UIColors.text,
+        ),
+        primaryColor: UIColors.splash,
+      ),
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      routeInformationProvider:
+          AppRouter.shareInstance.router.routeInformationProvider,
+      routerDelegate: AppRouter.shareInstance.router.routerDelegate,
+      routeInformationParser:
+          AppRouter.shareInstance.router.routeInformationParser,
+    );
   }
 }

@@ -7,7 +7,7 @@ class RouterKeyManager {
   final GlobalKey<NavigatorState> homeNavigatorKey =
       GlobalKey<NavigatorState>(debugLabel: 'home_key');
   final GlobalKey<NavigatorState> categoryNavigatorKey =
-      GlobalKey<NavigatorState>(debugLabel: 'category_key');
+      GlobalKey<NavigatorState>(debugLabel: 'order_key');
   final GlobalKey<NavigatorState> nutritionNavigatorKey =
       GlobalKey<NavigatorState>(debugLabel: 'nutrition_key');
   final GlobalKey<NavigatorState> profileNavigatorKey =
