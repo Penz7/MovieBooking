@@ -6,6 +6,7 @@ import 'package:movie_booking/network/services/movie_service.dart';
 class MovieController extends GetxController {
   var isLoading = false.obs;
   var allMovies = <Movie>[].obs;
+  var searchMovies = <Movie>[].obs;
 
   final MovieService _databaseService = MovieService();
   final MovieCategoryService _movieCategoryService = MovieCategoryService();
@@ -53,6 +54,26 @@ class MovieController extends GetxController {
       }
     } catch (error) {
       print('Error to get movie: $error');
+    }
+  }
+
+  void getMovieByCategory(String category) async {
+    searchMovies.clear();
+    try {
+      final result =
+          await _databaseService.getMoviesByCategory(category.trim());
+      if (result.isNotEmpty) {
+        for (var movieData in result) {
+          String categoryName = await _movieCategoryService
+              .getCategoryName(movieData.movieCategory!);
+          movieData.categoryName = categoryName;
+          searchMovies.add(movieData);
+        }
+      } else {
+        print('No movies found for category: $category');
+      }
+    } catch (error) {
+      print('Error getting movies by category: $error');
     }
   }
 

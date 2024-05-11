@@ -44,4 +44,19 @@ class MovieCategoryService {
       return ''; 
     }
   }
+
+  Future<String?> getDocumentIdByName(String name) async {
+  try {
+    QuerySnapshot<MovieCategory> querySnapshot = await _movieCategoryRef.where('name', isEqualTo: name).get();
+    if (querySnapshot.docs.isNotEmpty) {
+      return querySnapshot.docs.first.id;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    print('Error fetching document ID by name: $error');
+    return null;
+  }
+}
+
 }

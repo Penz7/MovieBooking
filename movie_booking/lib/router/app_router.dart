@@ -15,6 +15,7 @@ import 'package:movie_booking/screens/order_manage/components/order_detail_scree
 import 'package:movie_booking/screens/order_manage/order_manage.dart';
 import 'package:movie_booking/screens/profile/components/profile_detail.dart';
 import 'package:movie_booking/screens/profile/profile_account.dart';
+import 'package:movie_booking/screens/search/search_screen.dart';
 import 'package:movie_booking/screens/seat/seat_selection_screen.dart';
 import 'package:movie_booking/screens/splash_screen/page_not_found.dart';
 import 'package:movie_booking/screens/splash_screen/splash_screen.dart';
@@ -129,6 +130,18 @@ class AppRouter {
                         RouterKeyManager.instance.rootNavigatorKey,
                     builder: (context, state) {
                       return const ThankScreen();
+                    },
+                  ),
+                  GoRoute(
+                    path: 'search',
+                    parentNavigatorKey:
+                        RouterKeyManager.instance.rootNavigatorKey,
+                    builder: (context, state) {
+                      final params = state.extra as Map;
+                      return SearchScreen(
+                        categoryId: params['id'] ?? '',
+                        categoryName: params['category_name'] ?? '',
+                      );
                     },
                   ),
                 ],

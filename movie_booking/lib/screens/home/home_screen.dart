@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 //   delegate: AppSearchingDelegate(),
                 //   pinned: true,
                 // ),
-                const SliverToBoxAdapter(
+                 SliverToBoxAdapter(
                   child: Categories(),
                 ),
                 SliverToBoxAdapter(

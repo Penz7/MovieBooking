@@ -31,4 +31,8 @@ class MovieCategoryController extends GetxController {
     _databaseService.addMovieCategory(movieCategory);
   }
 
+
+  void getDocumentIdByName(String name) {
+    
+  }
 }

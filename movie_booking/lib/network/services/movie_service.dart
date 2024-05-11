@@ -40,4 +40,21 @@ class MovieService {
       return null;
     }
   }
+
+  Future<List<Movie>> getMoviesByCategory(String category) async {
+  try {
+    QuerySnapshot<Movie> querySnapshot = await _movieRef.where('movie_category', isEqualTo: category).get();
+    List<Movie> movies = [];
+    if (querySnapshot.docs.isNotEmpty) {
+      for (var doc in querySnapshot.docs) {
+        movies.add(doc.data());
+      }
+    }
+    return movies;
+  } catch (error) {
+    print('Error fetching movies by category: $error');
+    return [];
+  }
+}
+
 }

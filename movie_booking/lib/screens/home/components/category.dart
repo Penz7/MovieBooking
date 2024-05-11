@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movie_booking/generated/colors.gen.dart';
 import 'package:movie_booking/network/controllers/movie_category_controller.dart';
 import 'package:movie_booking/network/models/movie_category.dart';
+import 'package:movie_booking/network/services/movie_category_service.dart';
 import 'package:movie_booking/utils/common/cus_image.dart';
 import 'package:movie_booking/utils/common/cus_text.dart';
 import 'package:movie_booking/utils/constants/font_sizes.dart';
 
 class Categories extends StatelessWidget {
-  const Categories({
+  Categories({
     super.key,
   });
+
+  final movieCategoryService = MovieCategoryService();
 
   @override
   Widget build(BuildContext context) {
@@ -47,24 +51,42 @@ class Categories extends StatelessWidget {
                 int index,
               ) {
                 MovieCategory data = movieCategories[index];
-                return Column(
-                  children: [
-                    CusInternetImage(
-                      url: data.imageUrl.toString(),
-                      height: 24,
-                      width: 24,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Expanded(
-                      child: CusText.base(
-                        data.name.toString(),
-                        fontSize: FontSizes.medium,
+                return GestureDetector(
+                  onTap: () async {
+                    final String? id = await movieCategoryService
+                        .getDocumentIdByName(data.name);
+                    if (id != null) {
+                      const String route = '/home/search';
+                      if (context.mounted) {
+                        context.go(
+                          route,
+                          extra: {
+                            'id': id,
+                            'category_name': data.name,
+                          },
+                        );
+                      } else {}
+                    } else {}
+                  },
+                  child: Column(
+                    children: [
+                      CusInternetImage(
+                        url: data.imageUrl.toString(),
+                        height: 24,
+                        width: 24,
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Expanded(
+                        child: CusText.base(
+                          data.name.toString(),
+                          fontSize: FontSizes.medium,
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               },
               separatorBuilder: (BuildContext context, int index) {
