@@ -13,7 +13,8 @@ import 'package:movie_booking/utils/constants/font_sizes.dart';
 class SearchScreen extends StatefulWidget {
   const SearchScreen({
     super.key,
-    required this.categoryId, required this.categoryName,
+    required this.categoryId,
+    required this.categoryName,
   });
 
   final String categoryId;
@@ -94,17 +95,33 @@ class _SearchScreenState extends State<SearchScreen> {
                             scrollDirection: Axis.vertical,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: 10.0,
-                                    mainAxisSpacing: 10.0,
-                                    childAspectRatio: 1 / 2),
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10.0,
+                              mainAxisSpacing: 10.0,
+                              childAspectRatio: 1 / 2,
+                            ),
                             itemCount: movies.length,
                             itemBuilder: (BuildContext context, int index) {
                               final data = movies[index];
                               return GestureDetector(
-                                child: SizedBox(
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
                                   width: 200,
                                   height: 400,
+                                  decoration: BoxDecoration(
+                                      color: UIColors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: UIColors.black
+                                                .withOpacity(0.15),
+                                            blurRadius: 8,
+                                            offset: const Offset(
+                                              0,
+                                              2,
+                                            ),
+                                            spreadRadius: 0)
+                                      ]),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -128,7 +145,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       CusText.bold(
                                         data.name ?? '',
                                         fontSize: FontSizes.big,
-                                        maxLines: 3,
+                                        maxLines: 2,
                                         textAlign: TextAlign.center,
                                       ),
                                       const SizedBox(
